@@ -2,11 +2,13 @@
 #include <vector>
 using namespace std;
 
+// Arrays to store item information
 string item_code[] = {"A1", "A2", "B1", "B2", "B3", "C1", "C2", "C3", "D1", "D2", "E1", "E2", "E3", "F1", "F2", "G1", "G2"};
 string description[] = {"Compact", "Tower", "8 GB", "16 GB", "32 GB", "1 TB HDD", "2 TB HDD", "4 TB HDD", "240 GB SSD", "480 GB SSD", "1 TB HDD", "2 TB HDD", "4 TB HDD", "DVD/Blu-Ray Player", "DVD/Blu-Ray Re-writer", "Standard Version", "Professional Version"};
 double price[] = {75.00, 150.00, 79.99, 149.99, 299.99, 49.99, 89.99, 129.99, 59.99, 119.99, 49.99, 89.99, 129.99, 50.00, 100.00, 100.00, 175.00};
 
-double order_main_items(string cases, string ram, string disk)
+// Function to calculate the total price of the main items
+double calculateMainItemsPrice(string cases, string ram, string disk)
 {
     double total_price = 200;
     for (int i = 0; i < 17; i++)
@@ -15,20 +17,21 @@ double order_main_items(string cases, string ram, string disk)
         {
             total_price += price[i];
         }
-        if (item_code[i] == ram)
+        else if (item_code[i] == ram)
         {
             total_price += price[i];
         }
-        if (item_code[i] == disk)
+        else if (item_code[i] == disk)
         {
             total_price += price[i];
         }
     }
     return total_price;
 }
-void show_menu()
+
+// Function to display the main menu
+void displayMainMenu()
 {
-    cout << "---------------Welcome to Online Computer Shop----------------------------------\n\n";
     cout << "Category\t\tItem code\tDescription\t\t\tPrice ($)" << endl;
     cout << "--------------------------------------------------------------------------------" << endl;
 
@@ -65,13 +68,14 @@ void show_menu()
     cout << "--------------------------------------------------------------------------------" << endl;
 }
 
-double Task1(vector<string> &items)
+// Function for Task 1 - Choosing main items
+double chooseMainItems(vector<string> &items)
 {
     string cases;
     string ram;
     string drive;
 
-    cout << "Choose item code of one case: ";
+    cout << "Choose item code of one case   : ";
     cin >> cases;
     while (cases != "A1" && cases != "A2")
     {
@@ -81,7 +85,7 @@ double Task1(vector<string> &items)
     }
     items.push_back(cases);
 
-    cout << "Choose item code of one RAM: ";
+    cout << "Choose item code of one RAM    : ";
     cin >> ram;
     while (ram != "B1" && ram != "B2" && ram != "B3")
     {
@@ -101,94 +105,125 @@ double Task1(vector<string> &items)
         cin >> drive;
     }
     items.push_back(drive);
-    double total_price = order_main_items(cases, ram, drive);
+    double total_price = calculateMainItemsPrice(cases, ram, drive);
     return total_price;
 }
 
-void displayChosenItem(vector<string> item, int total)
+// Function to display chosen items and calculate discounts
+void displayChosenItem(vector<string> item, double total)
 {
-    cout<<"\nYou chose this items\n";
+    cout << "\nItems Selected\n";
     cout << "Item code\tDescription\t\t\tPrice ($)" << endl;
     cout << "----------------------------------------------------------" << endl;
     for (int i = 0; i < 17; i++)
     {
-        for (int j = 0; j < 17; j++)
+        for (int j = 0; j < item.size(); j++)
         {
             if (item[j] == item_code[i])
             {
-                cout << item_code[j] << "\t\t" << description[j] << "\t\t\t\t" << price[j] << endl;
+                // Adjust the spacing based on the length of the description for better alignment
+                if (item_code[i] == "A1" || item_code[i] == "A2" || item_code[i] == "B1" || item_code[i] == "B2" || item_code[i] == "B3")
+                {
+                    cout << item_code[i] << "\t\t" << description[i] << "\t\t\t\t" << price[i] << endl;
+                }
+                else if (item_code[i] == "C1" || item_code[i] == "C2" || item_code[i] == "C3" || item_code[i] == "D1" || item_code[i] == "D2" || item_code[i] == "E1" || item_code[i] == "E2" || item_code[i] == "E3")
+                {
+                    cout << item_code[i] << "\t\t" << description[i] << "\t\t\t" << price[i] << endl;
+                }
+                else
+                {
+                    cout << item_code[i] << "\t\t" << description[i] << "\t\t" << price[i] << endl;
+                }
             }
         }
     }
-    cout << "\nThe total price of computer is\t\t\t" << total << endl;
+    cout << "----------------------------------------------------------" << endl;
+    cout << "The total price of computer is\t\t\t" << total << "\n";
+
+    if (item.size() == 4)
+    {
+        cout << "Discount\t\t\t\t\t"
+             << "5%" << endl;
+        cout << "Final price after a 5% discount is\t\t" << total - total * 0.05 << "\n\n";
+    }
+    else if (item.size() > 4)
+    {
+        cout << "Discount\t\t\t\t\t"
+             << "10%" << endl;
+        cout << "Final price after a 10% discount is\t\t" << total - total * 0.1 << "\n\n";
+    }
+}
+
+// Function to return an item price
+double addItemToCart(string code, vector<string> &items)
+{
+    for (int i = 0; i < 17; i++)
+    {
+        if (item_code[i] == code)
+        {
+            return price[i];
+        }
+    }
 }
 
 int main()
 {
-    show_menu();
+    system("cls");
+    cout << "\n\n                -------------------------------------------------------------" << endl;
+    cout << "                |                                                           |" << endl;
+    cout << "                |          Welcome To Online Computer Shop                  |" << endl;
+    cout << "                |                                                           |" << endl;
+    cout << "                -------------------------------------------------------------"
+         << "\n\n\n";
 
+    displayMainMenu();
     vector<string> items;
 
     // TASK1
 
-    double total_price = Task1(items);
+    double total_price = chooseMainItems(items);
     displayChosenItem(items, total_price);
-    // cout << "\n\nThe price of computer is " << total_price << endl;
 
-    // TASK2
-    int no_of_items = 0;
-    char choice;
-    cout << "Do you want to choose any items from the other categories" << endl;
-    cin >> choice;
-    string code;
-    if (choice == 'Y' || choice == 'y')
+    while (true)
     {
-
-        cout << "Enter item code from above menu" << endl;
-        cin >> code;
-        while (code == "D1" || code == "D2" || code == "E1" || code == "E2" || code == "E3" || code == "F1" || code == "F2" || code == "G1" || code == "G2")
+        char choice;
+        cout << "\n\nDo you want to buy any items from other categories? (Y/N): ";
+        cin >> choice;
+        if (choice == 'n' || choice == 'N')
         {
-            for (int i = 0; i < 17; i++)
+            break;
+        }
+        else if (choice == 'y' || choice == 'Y')
+        {
+            system("cls");
+            displayMainMenu();
+
+            string code;
+            cout << "Enter item code from above menu: ";
+            cin >> code;
+            while (code != "D1" && code != "D2" && code != "E1" && code != "E2" && code != "E3" && code != "F1" && code != "F2" && code != "G1" && code != "G2")
             {
-                if (item_code[i] == code)
-                {
-                    items.push_back(item_code[i]);
-                    no_of_items++;
-                    total_price += price[i];
-                    break;
-                }
-            }
-            cout << "Do you want to buy more items" << endl;
-            cin >> choice;
-            if (choice == 'Y' || choice == 'y')
-            {
-                cout << "Enter item code from above menu" << endl;
+                cout << "\nERROR! Please enter the item code from above menu" << endl;
+                cout << "Choose item code from above menu: ";
                 cin >> code;
             }
-            else
-            {
-                break;
-            }
+            items.push_back(code);
+            total_price += addItemToCart(code, items);
+            displayChosenItem(items, total_price);
         }
-        cout << "YOUR TOTAL PRICE AFTER BUYING ADDITIONAL ITEMS IS " << total_price << endl;
-
-        // TASK3
-        if (no_of_items == 1)
+        else
         {
-            cout << "The new price of computer after discount is " << (total_price) - (0.05 * total_price) << endl;
-            cout << "The amount of money saved is " << total_price * 0.05 << endl;
-        }
-        else if (no_of_items > 1)
-        {
-            cout << "The new price of computer after discount is " << (total_price) - (0.1 * total_price) << endl;
-            cout << "The amount of money saved is " << total_price * 0.1 << endl;
+            cout << "\nERROR! Please enter (Y or N)"
+                 << "\n";
         }
     }
-    cout << "THE ITEMS BOUGHT ARE:" << endl;
-    for (int i = 0; i < items.size(); i++)
-    {
-        cout << items[i] << endl;
-    }
-
+    system("cls");
+    cout << "\n\n                -------------------------------------------------------------" << endl;
+    cout << "                |                                                           |" << endl;
+    cout << "                |          Thank you for using Online Computer Shop         |" << endl;
+    cout << "                |                                                           |" << endl;
+    cout << "                -------------------------------------------------------------"
+         << "\n\n";
+    displayChosenItem(items, total_price);
     return 0;
 }
