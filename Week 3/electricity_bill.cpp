@@ -13,7 +13,7 @@ void costSlab1()
     cout << "\nBill for Slab 1:\n";
     for (int i = 0; i < 3; i++)
     {
-        cout << "Unit " << (i + 1) << ": " << 10 * Units[0][i] << "   ";
+        cout << 10 * Units[0][i] << "   ";
     }
     cout << endl;
 }
@@ -24,7 +24,7 @@ void costSlab2()
     cout << "\nBill for Slab 2:\n";
     for (int i = 0; i < 3; i++)
     {
-        cout << "Unit " << (i + 1) << ": " << 15 * Units[1][i] << "   ";
+        cout << 15 * Units[1][i] << "   ";
     }
     cout << endl;
 }
@@ -35,7 +35,7 @@ void costSlab3()
     cout << "\nBill for Slab 3:\n";
     for (int i = 0; i < 3; i++)
     {
-        cout << "Unit " << (i + 1) << ": " << 20 * Units[2][i] << "   ";
+        cout << 20 * Units[2][i] << "   ";
     }
     cout << endl;
 }
