@@ -9,7 +9,9 @@ struct Charity
 
 void displayCharities(const vector<Charity> &charities)
 {
-    cout << "Charity Number"<< "\t\t "<< "Charity Name\n";
+    cout << "Charity Number"
+         << "\t\t "
+         << "Charity Name\n";
     for (size_t i = 0; i < charities.size(); ++i)
     {
         cout << i + 1 << "\t\t\t" << charities[i].name << "\n";
@@ -19,7 +21,9 @@ void displayCharities(const vector<Charity> &charities)
 void displayTotals(const vector<Charity> &charities)
 {
     cout << "\nCharity Totals (Descending Order):\n";
-    cout<< "Charity Name"<< "\t\t"<< "Total Donated\n";
+    cout << "Charity Name"
+         << "\t\t"
+         << "Total Donated\n";
     vector<Charity> sortedCharities = charities;
     sort(sortedCharities.begin(), sortedCharities.end(),
          [](const Charity &a, const Charity &b)
@@ -27,13 +31,13 @@ void displayTotals(const vector<Charity> &charities)
 
     for (const auto &charity : sortedCharities)
     {
-        cout  << charity.name << "\t\t\t"
+        cout << charity.name << "\t\t\t"
              << "$" << charity.total << "\n";
     }
 }
 
 int main()
-{
+{           
     vector<Charity> charities = {{"Charity 1", 0.0}, {"Charity 2", 0.0}, {"Charity 3", 0.0}};
     double shoppingBill, donation;
     int choice;
